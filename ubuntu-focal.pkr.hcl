@@ -12,8 +12,8 @@ variable "version" {
   default = "1.0.0"
 }
 
-data "amazon-ami" "ubuntu-focal-east" {
-  region = "us-east-2"
+data "amazon-ami" "ubuntu-focal-west-1" {
+  region = "eu-west-1"
   filters = {
     name = "ubuntu/images/hvm-ssd/ubuntu-focal-20.04-amd64-server-*"
   }
@@ -21,17 +21,17 @@ data "amazon-ami" "ubuntu-focal-east" {
   owners      = ["099720109477"]
 }
 
-source "amazon-ebs" "basic-example-east" {
-  region         = "us-east-2"
-  source_ami     = data.amazon-ami.ubuntu-focal-east.id
+source "amazon-ebs" "basic-example-west-1" {
+  region         = "eu-west-1"
+  source_ami     = data.amazon-ami.ubuntu-focal-west-1.id
   instance_type  = "t2.small"
   ssh_username   = "ubuntu"
   ssh_agent_auth = false
   ami_name       = "packer_AWS_{{timestamp}}_v${var.version}"
 }
 
-data "amazon-ami" "ubuntu-focal-west" {
-  region = "us-west-1"
+data "amazon-ami" "ubuntu-focal-west-2" {
+  region = "eu-west-2"
   filters = {
     name = "ubuntu/images/hvm-ssd/ubuntu-focal-20.04-amd64-server-*"
   }
@@ -39,9 +39,9 @@ data "amazon-ami" "ubuntu-focal-west" {
   owners      = ["099720109477"]
 }
 
-source "amazon-ebs" "basic-example-west" {
-  region = "us-west-1"
-  source_ami     = data.amazon-ami.ubuntu-focal-west.id
+source "amazon-ebs" "basic-example-west-2" {
+  region = "us-west-2"
+  source_ami     = data.amazon-ami.ubuntu-focal-west-2.id
   instance_type  = "t2.small"
   ssh_username   = "ubuntu"
   ssh_agent_auth = false
@@ -66,7 +66,7 @@ Some nice description about the image being published to HCP Packer Registry.
     }
   }
   sources = [
-    "source.amazon-ebs.basic-example-east",
-    "source.amazon-ebs.basic-example-west"
+    "source.amazon-ebs.basic-example-west-1",
+    "source.amazon-ebs.basic-example-west-2"
   ]
 }
