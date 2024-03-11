@@ -9,7 +9,7 @@ packer {
 
 variable "version" {
   type    = string
-  default = "1.0.0"
+  default = "1.0.1"
 }
 
 data "amazon-ami" "ubuntu-focal-west-1" {
@@ -40,7 +40,7 @@ data "amazon-ami" "ubuntu-focal-west-2" {
 }
 
 source "amazon-ebs" "basic-example-west-2" {
-  region = "us-west-2"
+  region         = "eu-west-2"
   source_ami     = data.amazon-ami.ubuntu-focal-west-2.id
   instance_type  = "t2.small"
   ssh_username   = "ubuntu"
